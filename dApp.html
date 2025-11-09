@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Time Capsule ✨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Floating Emojis */
+        .floating-emojis {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .emoji {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .emoji:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .emoji:nth-child(2) { left: 20%; animation-delay: 1s; }
+        .emoji:nth-child(3) { left: 30%; animation-delay: 2s; }
+        .emoji:nth-child(4) { left: 40%; animation-delay: 3s; }
+        .emoji:nth-child(5) { left: 50%; animation-delay: 4s; }
+        .emoji:nth-child(6) { left: 60%; animation-delay: 5s; }
+        .emoji:nth-child(7) { left: 70%; animation-delay: 6s; }
+        .emoji:nth-child(8) { left: 80%; animation-delay: 7s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .magic-title {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073; }
+            to { text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6; }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .network-info {
+            font-weight: bold;
+            color: #4ECDC4;
+        }
+
+        /* Sections */
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4ECDC4;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 5px;
+            color: #888;
+        }
+
+        .form-group a {
+            color: #4ECDC4;
+            text-decoration: none;
+        }
+
+        .form-group a:hover {
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .magic-button {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .magic-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .sample-button {
+            background: linear-gradient(45deg, #45B7D1, #96CEB4);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .action-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .danger-btn {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+        }
+
+        /* Display Areas */
+        .info-box {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4ECDC4;
+        }
+
+        .info-box h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .status-display,
+        .result-display,
+        .contract-display {
+            min-height: 60px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        /* Wallet Info */
+        .wallet-info {
+            text-align: center;
+            padding: 15px;
+            background: rgba(78, 205, 196, 0.1);
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            margin-top: 30px;
+        }
+
+        .contract-address {
+            font-family: monospace;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .magic-title {
+                font-size: 2rem;
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4ECDC4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Emojis Background -->
+    <div class="floating-emojis">
+        <div class="emoji">🔮</div>
+        <div class="emoji">⭐</div>
+        <div class="emoji">💫</div>
+        <div class="emoji">🔑</div>
+        <div class="emoji">💖</div>
+        <div class="emoji">🌟</div>
+        <div class="emoji">🎩</div>
+        <div class="emoji">✨</div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="magic-title">🔮 Magic Time Capsule</h1>
+            <p class="subtitle">Store your secret messages with love and magic! ✨</p>
+            <p class="network-info">🌐 Sepolia Testnet</p>
+        </header>
+
+        <!-- Connection Section -->
+        <section class="section connection-section">
+            <h2>🔗 Connect Your Magic</h2>
+            <button id="connectWallet" class="magic-button">
+                🦊 Connect MetaMask
+            </button>
+            <div id="walletInfo" class="wallet-info hidden">
+                <p>✅ Connected: <span id="walletAddress"></span></p>
+            </div>
+        </section>
+
+        <!-- Create Capsule Section -->
+        <section class="section create-section">
+            <h2>📝 Create Magic Capsule</h2>
+            <div class="form-group">
+                <label for="message">Your Secret Message 🔒</label>
+                <textarea 
+                    id="message" 
+                    placeholder="Write your magical message here... ✨" 
+                    rows="4"
+                ></textarea>
+            </div>
+            <div class="form-group">
+                <label for="unlockTime">Unlock Time ⏰</label>
+                <input 
+                    type="number" 
+                    id="unlockTime" 
+                    placeholder="Enter future Unix timestamp from unixtimestamp.com"
+                >
+                <small>Get future timestamps from <a href="https://www.unixtimestamp.com" target="_blank">unixtimestamp.com</a></small>
+            </div>
+            <button id="createCapsule" class="magic-button create-btn">
+                🎁 Create Time Capsule
+            </button>
+            <button id="trySample" class="sample-button">
+                🧪 Try Sample Data
+            </button>
+        </section>
+
+        <!-- Capsule Actions Section -->
+        <section class="section actions-section">
+            <h2>🎯 Capsule Actions</h2>
+            <div class="action-buttons">
+                <button id="checkStatus" class="action-btn">📊 Check Status</button>
+                <button id="checkMyCapsule" class="action-btn">🔍 Check My Capsule</button>
+                <button id="revealMessage" class="action-btn">🎁 Reveal Message</button>
+                <button id="deleteCapsule" class="action-btn danger-btn">🗑️ Delete Capsule</button>
+            </div>
+        </section>
+
+        <!-- Display Sections -->
+        <section class="section display-section">
+            <div class="info-box">
+                <h3>📦 Your Capsule Status</h3>
+                <div id="capsuleStatus" class="status-display">
+                    Your capsule status will appear here...
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3>⚡ Transaction Results</h3>
+                <div id="transactionResult" class="result-display">
+                    Transaction results will appear here...
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3>📊 Contract Info</h3>
+                <div id="contractInfo" class="contract-display">
+                    Total Capsules: <span id="totalCapsules">0</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Made with 💖 and magic sparkles ✨</p>
+            <p class="contract-address">
+                Contract: 0x5C683c9f05A03E5E8e4c61a812B78Df5064d8604
+            </p>
+        </footer>
+    </div>
+
+    <!-- Web3.js - More reliable than ethers.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.8.2/web3.min.js"></script>
+    <script>
+        // Contract configuration
+        const CONTRACT_ADDRESS = '0x5C683c9f05A03E5E8e4c61a812B78Df5064d8604';
+        const CONTRACT_ABI = [
+            {
+                "inputs": [
+                    {"internalType": "string", "name": "_message", "type": "string"},
+                    {"internalType": "uint256", "name": "_unlockTime", "type": "uint256"}
+                ],
+                "name": "createCapsule",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "deleteCapsule",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "getMyCapsule",
+                "outputs": [
+                    {"internalType": "string", "name": "", "type": "string"},
+                    {"internalType": "uint256", "name": "", "type": "uint256"},
+                    {"internalType": "bool", "name": "", "type": "bool"}
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "getTotalCapsules",
+                "outputs": [
+                    {"internalType": "uint256", "name": "", "type": "uint256"}
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "hasCapsule",
+                "outputs": [
+                    {"internalType": "bool", "name": "", "type": "bool"}
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "getCapsuleStatus",
+                "outputs": [
+                    {"internalType": "string", "name": "", "type": "string"}
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ];
+
+        console.log("Magic Time Capsule DApp loaded! ✨");
+
+        // Global variables
+        let web3;
+        let contract;
+        let userAddress;
+        let isConnected = false;
+
+        // DOM Elements
+        const connectWalletBtn = document.getElementById('connectWallet');
+        const walletInfo = document.getElementById('walletInfo');
+        const walletAddress = document.getElementById('walletAddress');
+        const createCapsuleBtn = document.getElementById('createCapsule');
+        const trySampleBtn = document.getElementById('trySample');
+        const checkStatusBtn = document.getElementById('checkStatus');
+        const checkMyCapsuleBtn = document.getElementById('checkMyCapsule');
+        const revealMessageBtn = document.getElementById('revealMessage');
+        const deleteCapsuleBtn = document.getElementById('deleteCapsule');
+        const messageInput = document.getElementById('message');
+        const unlockTimeInput = document.getElementById('unlockTime');
+        const capsuleStatus = document.getElementById('capsuleStatus');
+        const transactionResult = document.getElementById('transactionResult');
+        const totalCapsules = document.getElementById('totalCapsules');
+
+        // Check if MetaMask is installed
+        function checkMetaMask() {
+            console.log("Checking for MetaMask...");
+            if (typeof window.ethereum === 'undefined') {
+                console.log("MetaMask not found!");
+                showError('❌ MetaMask is not installed! Please install MetaMask to use this DApp.');
+                connectWalletBtn.disabled = true;
+                connectWalletBtn.textContent = '❌ Install MetaMask';
+                return false;
+            }
+            console.log("MetaMask found!");
+            return true;
+        }
+
+        // Initialize Web3
+        async function initWeb3() {
+            try {
+                if (typeof Web3 === 'undefined') {
+                    showError('❌ Web3 library not loaded. Please refresh the page.');
+                    return false;
+                }
+
+                // Use MetaMask's provider
+                web3 = new Web3(window.ethereum);
+                
+                // Initialize contract
+                contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+                
+                console.log("Web3 initialized successfully!");
+                return true;
+                
+            } catch (error) {
+                console.error('Web3 initialization error:', error);
+                showError('❌ Failed to initialize blockchain connection: ' + error.message);
+                return false;
+            }
+        }
+
+        // Connect Wallet
+        async function connectWallet() {
+            console.log("Connect button clicked!");
+            
+            if (!checkMetaMask()) {
+                return;
+            }
+
+            try {
+                showLoading(connectWalletBtn, 'Connecting...');
+                
+                // Initialize Web3 first
+                const web3Initialized = await initWeb3();
+                if (!web3Initialized) {
+                    throw new Error('Web3 initialization failed');
+                }
+
+                // Request account access
+                const accounts = await window.ethereum.request({ 
+                    method: 'eth_requestAccounts' 
+                });
+                
+                console.log("Accounts received:", accounts);
+                
+                if (accounts.length > 0) {
+                    await handleWalletConnected(accounts[0]);
+                } else {
+                    showError('No accounts found in MetaMask');
+                    connectWalletBtn.textContent = '🦊 Connect MetaMask';
+                    connectWalletBtn.disabled = false;
+                }
+                
+            } catch (error) {
+                console.error('Connection error:', error);
+                if (error.code === 4001) {
+                    showError('❌ Please connect to MetaMask to use this DApp.');
+                } else {
+                    showError('❌ Failed to connect: ' + error.message);
+                }
+                connectWalletBtn.textContent = '🦊 Connect MetaMask';
+                connectWalletBtn.disabled = false;
+            }
+        }
+
+        // Handle wallet connection
+        async function handleWalletConnected(account) {
+            try {
+                userAddress = account;
+                isConnected = true;
+                
+                // Update UI
+                walletAddress.textContent = `${userAddress.substring(0, 6)}...${userAddress.substring(38)}`;
+                walletInfo.classList.remove('hidden');
+                connectWalletBtn.textContent = '✅ Connected';
+                connectWalletBtn.disabled = false;
+                
+                showSuccess('✅ Wallet connected successfully! ✨');
+                await updateCapsuleStatus();
+                await updateTotalCapsules();
+                
+                // Listen for account changes
+                window.ethereum.on('accountsChanged', handleAccountsChanged);
+                
+                console.log("Wallet connected successfully! Address:", userAddress);
+                
+            } catch (error) {
+                console.error('Wallet connection handler error:', error);
+                showError('Error setting up wallet connection: ' + error.message);
+            }
+        }
+
+        // Handle account changes
+        function handleAccountsChanged(accounts) {
+            if (accounts.length === 0) {
+                // User disconnected their wallet
+                walletInfo.classList.add('hidden');
+                connectWalletBtn.textContent = '🦊 Connect MetaMask';
+                showError('Wallet disconnected. Please connect again.');
+                userAddress = null;
+                isConnected = false;
+            } else if (accounts[0] !== userAddress) {
+                // User switched accounts
+                userAddress = accounts[0];
+                walletAddress.textContent = `${userAddress.substring(0, 6)}...${userAddress.substring(38)}`;
+                showSuccess('Account switched!');
+                updateCapsuleStatus();
+            }
+        }
+
+        // Create Capsule
+        async function createCapsule() {
+            if (!isConnected || !userAddress) {
+                showError('Please connect your wallet first!');
+                return;
+            }
+
+            try {
+                const message = messageInput.value.trim();
+                const unlockTime = unlockTimeInput.value.trim();
+                
+                if (!message) {
+                    showError('Please enter a secret message!');
+                    return;
+                }
+                
+                if (!unlockTime || unlockTime <= Math.floor(Date.now() / 1000)) {
+                    showError('Please enter a valid future Unix timestamp!');
+                    return;
+                }
+                
+                showLoading(createCapsuleBtn, 'Creating Capsule...');
+                
+                const tx = contract.methods.createCapsule(message, unlockTime);
+                const gas = await tx.estimateGas({ from: userAddress });
+                
+                showTransaction('⏳ Capsule creation submitted... Waiting for confirmation.');
+                
+                const receipt = await tx.send({
+                    from: userAddress,
+                    gas: gas
+                });
+                
+                showSuccess('✅ Capsule created successfully! 🎉 Your secret is now safe on the blockchain!');
+                
+                // Clear inputs
+                messageInput.value = '';
+                unlockTimeInput.value = '';
+                
+                await updateCapsuleStatus();
+                await updateTotalCapsules();
+                
+            } catch (error) {
+                console.error('Create capsule error:', error);
+                showError('❌ Failed to create capsule: ' + error.message);
+            } finally {
+                createCapsuleBtn.textContent = '🎁 Create Time Capsule';
+                createCapsuleBtn.disabled = false;
+            }
+        }
+
+        // Check Capsule Status
+        async function checkCapsuleStatus() {
+            if (!isConnected || !userAddress) {
+                showError('Please connect your wallet first!');
+                return;
+            }
+
+            try {
+                showLoading(checkStatusBtn, 'Checking...');
+                
+                const hasCapsule = await contract.methods.hasCapsule().call({ from: userAddress });
+                const status = await contract.methods.getCapsuleStatus().call({ from: userAddress });
+                
+                if (hasCapsule) {
+                    capsuleStatus.innerHTML = `
+                        <div style="color: #4ECDC4; font-weight: bold;">
+                            📦 Capsule Status: ${status}
+                        </div>
+                        <div style="margin-top: 10px; font-size: 0.9rem;">
+                            ✨ You have a time capsule waiting!
+                        </div>
+                    `;
+                } else {
+                    capsuleStatus.innerHTML = `
+                        <div style="color: #FF6B6B;">
+                            ❌ No capsule found
+                        </div>
+                        <div style="margin-top: 10px;">
+                            Create your first magical capsule above!
+                        </div>
+                    `;
+                }
+                
+            } catch (error) {
+                console.error('Check status error:', error);
+                showError('❌ Failed to check status: ' + error.message);
+            } finally {
+                checkStatusBtn.textContent = '📊 Check Status';
+                checkStatusBtn.disabled = false;
+            }
+        }
+
+        // Reveal Message
+        async function revealMessage() {
+            if (!isConnected || !userAddress) {
+                showError('Please connect your wallet first!');
+                return;
+            }
+
+            try {
+                showLoading(revealMessageBtn, 'Unlocking...');
+                
+                const result = await contract.methods.getMyCapsule().call({ from: userAddress });
+                const message = result[0];
+                const unlockTime = result[1];
+                const canUnlock = result[2];
+                
+                if (canUnlock) {
+                    capsuleStatus.innerHTML = `
+                        <div style="color: #96CEB4; font-weight: bold;">
+                            🎉 Secret Message Revealed!
+                        </div>
+                        <div style="margin-top: 15px; padding: 15px; background: rgba(150, 206, 180, 0.1); border-radius: 8px; font-style: italic;">
+                            "${message}"
+                        </div>
+                        <div style="margin-top: 10px; font-size: 0.9rem;">
+                            🔓 Unlocked at: ${new Date(unlockTime * 1000).toLocaleString()}
+                        </div>
+                    `;
+                } else {
+                    const timeLeft = unlockTime - Math.floor(Date.now() / 1000);
+                    const days = Math.floor(timeLeft / (24 * 60 * 60));
+                    const hours = Math.floor((timeLeft % (24 * 60 * 60)) / (60 * 60));
+                    
+                    capsuleStatus.innerHTML = `
+                        <div style="color: #FF8E53;">
+                            🔒 Still Locked!
+                        </div>
+                        <div style="margin-top: 10px;">
+                            ⏰ Time until unlock: ${days}d ${hours}h
+                        </div>
+                        <div style="margin-top: 5px; font-size: 0.9rem;">
+                            📅 Unlock time: ${new Date(unlockTime * 1000).toLocaleString()}
+                        </div>
+                    `;
+                }
+                
+            } catch (error) {
+                console.error('Reveal message error:', error);
+                showError('❌ Failed to reveal message: ' + error.message);
+            } finally {
+                revealMessageBtn.textContent = '🎁 Reveal Message';
+                revealMessageBtn.disabled = false;
+            }
+        }
+
+        // Delete Capsule
+        async function deleteCapsule() {
+            if (!isConnected || !userAddress) {
+                showError('Please connect your wallet first!');
+                return;
+            }
+
+            try {
+                if (!confirm('Are you sure you want to delete your time capsule? This action cannot be undone!')) {
+                    return;
+                }
+                
+                showLoading(deleteCapsuleBtn, 'Deleting...');
+                
+                const tx = contract.methods.deleteCapsule();
+                const gas = await tx.estimateGas({ from: userAddress });
+                
+                showTransaction('⏳ Capsule deletion submitted... Waiting for confirmation.');
+                
+                const receipt = await tx.send({
+                    from: userAddress,
+                    gas: gas
+                });
+                
+                showSuccess('✅ Capsule deleted successfully! 🗑️');
+                
+                await updateCapsuleStatus();
+                await updateTotalCapsules();
+                
+            } catch (error) {
+                console.error('Delete capsule error:', error);
+                showError('❌ Failed to delete capsule: ' + error.message);
+            } finally {
+                deleteCapsuleBtn.textContent = '🗑️ Delete Capsule';
+                deleteCapsuleBtn.disabled = false;
+            }
+        }
+
+        // Try Sample Data
+        function trySampleData() {
+            const futureTime = Math.floor(Date.now() / 1000) + (24 * 60 * 60); // 24 hours from now
+            messageInput.value = "This is my magical secret message! ✨ Future me, remember this moment with love! 💖";
+            unlockTimeInput.value = futureTime;
+            showSuccess('🧪 Sample data loaded! Feel free to modify the message and time.');
+        }
+
+        // Update total capsules count
+        async function updateTotalCapsules() {
+            try {
+                const total = await contract.methods.getTotalCapsules().call();
+                totalCapsules.textContent = total.toString();
+            } catch (error) {
+                console.error('Failed to get total capsules:', error);
+            }
+        }
+
+        // Update capsule status on load
+        async function updateCapsuleStatus() {
+            try {
+                const hasCapsule = await contract.methods.hasCapsule().call({ from: userAddress });
+                if (hasCapsule) {
+                    const status = await contract.methods.getCapsuleStatus().call({ from: userAddress });
+                    capsuleStatus.innerHTML = `
+                        <div style="color: #4ECDC4;">
+                            📦 You have a capsule: <strong>${status}</strong>
+                        </div>
+                        <div style="margin-top: 5px; font-size: 0.9rem;">
+                            Click "Reveal Message" to see your secret when unlocked!
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Failed to update capsule status:', error);
+            }
+        }
+
+        // UI Helper Functions
+        function showLoading(button, text) {
+            button.innerHTML = `<span class="loading"></span> ${text}`;
+            button.disabled = true;
+        }
+
+        function showTransaction(message) {
+            transactionResult.innerHTML = `<div style="color: #45B7D1;">${message}</div>`;
+        }
+
+        function showSuccess(message) {
+            transactionResult.innerHTML = `<div style="color: #96CEB4;">${message}</div>`;
+        }
+
+        function showError(message) {
+            transactionResult.innerHTML = `<div style="color: #FF6B6B;">${message}</div>`;
+        }
+
+        // Event Listeners
+        connectWalletBtn.addEventListener('click', connectWallet);
+        createCapsuleBtn.addEventListener('click', createCapsule);
+        trySampleBtn.addEventListener('click', trySampleData);
+        checkStatusBtn.addEventListener('click', checkCapsuleStatus);
+        checkMyCapsuleBtn.addEventListener('click', checkCapsuleStatus);
+        revealMessageBtn.addEventListener('click', revealMessage);
+        deleteCapsuleBtn.addEventListener('click', deleteCapsule);
+
+        // Initialize when page loads
+        window.addEventListener('load', function() {
+            console.log('Page loaded, checking for MetaMask...');
+            checkMetaMask();
+            showSuccess('✨ DApp loaded! Click "Connect MetaMask" to start.');
+        });
+    </script>
+</body>
+</html>
