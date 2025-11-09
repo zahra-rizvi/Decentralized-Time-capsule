@@ -2,18 +2,6 @@
 
 A beautiful and magical decentralized application that lets you store secret messages on the Ethereum blockchain, only to be revealed at a future time of your choosing! ✨
 
-## 📖 Table of Contents
-- [Overview](#-overview)
-- [Features](#-features)
-- [Technology Stack](#-technology-stack)
-- [Project Structure](#-project-structure)
-- [Smart Contract](#-smart-contract)
-- [Installation & Setup](#-installation--setup)
-- [How to Use](#-how-to-use)
-- [Screenshots](#-screenshots)
-- [Assignment Requirements](#-assignment-requirements)
-- [Learning Outcomes](#-learning-outcomes)
-
 ## 🌟 Overview
 
 Magic Time Capsule is a full-stack decentralized application that demonstrates the integration of Solidity smart contracts with a modern web interface. Users can create encrypted time capsules containing secret messages that remain locked until a specified future date, showcasing the power of blockchain for time-based data storage.
